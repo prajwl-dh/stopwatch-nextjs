@@ -51,7 +51,7 @@ export default function Stopwatch() {
       <p className='text-[3.5rem] md:text-[6rem] font-bold mt-1 leading-none text-center p-5'>
         Stopwatch
       </p>
-      <div className='p-10 mx-2 w-[95vw] lg:w-[50vw] flex flex-col justify-around gap-10 items-center bg-gray-200 backdrop-blur-sm bg-opacity-40 rounded-lg shadow-sm'>
+      <div className='p-10 mx-2 w-[95vw] lg:w-[50vw] flex flex-col justify-around gap-10 items-center bg-gray-200 backdrop-blur-sm bg-opacity-40 rounded-lg shadow-sm select-none'>
         <p className='text-3xl md:text-6xl font-bold flex'>
           <span className='min-w-12 md:w-20'>
             {hours < 10 ? '0' + hours.toString() : hours}
