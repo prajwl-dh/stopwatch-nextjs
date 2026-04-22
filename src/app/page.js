@@ -23,28 +23,36 @@ export default function Stopwatch() {
     setPlaying(false);
   };
 
+  const startTimeRef = React.useRef(null);
+
   React.useEffect(() => {
     let interval;
+
     if (playing) {
+      startTimeRef.current =
+        Date.now() -
+        (hours * 3600000 +
+          minutes * 60000 +
+          seconds * 1000 +
+          milliseconds * 10);
+
       interval = setInterval(() => {
-        if (milliseconds == 59) {
-          setMilliseconds(0);
-          setSeconds((prev) => prev + 1);
-          if (seconds == 59) {
-            setSeconds(0);
-            setMinutes((prev) => prev + 1);
-            if (minutes == 59) {
-              setMinutes(0);
-              setHours((prev) => prev + 1);
-            }
-          }
-        } else {
-          setMilliseconds((prev) => prev + 1);
-        }
-      }, 17);
+        const elapsed = Date.now() - startTimeRef.current;
+
+        const hrs = Math.floor(elapsed / 3600000);
+        const mins = Math.floor((elapsed % 3600000) / 60000);
+        const secs = Math.floor((elapsed % 60000) / 1000);
+        const millis = Math.floor((elapsed % 1000) / 10);
+
+        setHours(hrs);
+        setMinutes(mins);
+        setSeconds(secs);
+        setMilliseconds(millis);
+      }, 10);
     }
-    return () => clearTimeout(interval);
-  }, [playing, minutes, seconds, milliseconds]);
+
+    return () => clearInterval(interval);
+  }, [playing]);
 
   return (
     <div className='absolute flex flex-col justify-center gap-2 md:gap-10 items-center h-full w-full bg-white bg-[radial-gradient(#e5e7eb_2px,transparent_1px)] [background-size:60px_60px]'>
